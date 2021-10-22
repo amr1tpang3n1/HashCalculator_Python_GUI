@@ -38,3 +38,43 @@ class HashCalculator:
         self.result = Label(self.root, text="Hash Generated: ", bg="#abcdef", font="cambria 14")
         self.result_box = Entry(self.root, font = "cambria 12", width = "50", textvariable = self.TextVar)
         self.root.mainloop()
+
+    def hash_generator_function(self):
+        from tkinter import messagebox
+
+        hash = self.comboBox.get()
+        hashType = str()
+        if hash == "Md5":
+            hashType = "1"
+        elif hash == "Sha2":
+            hashType = "2"
+        elif hash == "Sha1":
+            hashType = "3"
+
+        string = str(self.userInput.get())
+        if string == "":
+            messagebox.showinfo("Error","Nothing to do")
+            
+        elif hashType.strip() == "1":
+            password = string.encode()
+            passwordHash = hashlib.md5(password).hexdigest()
+            self.result.place(x=30, y=180)
+            self.TextVar.set(passwordHash)
+            self.result_box.place(x=30, y=220)
+
+        elif hashType.strip() == "2":
+            password = string.encode()
+            passwordHash = hashlib.sha256(password).hexdigest()
+            self.result.place(x=30, y=180)
+            self.TextVar.set(passwordHash)
+            self.result_box.place(x=30, y=220)
+
+        elif hashType.strip() == "3":
+            password = string.encode()
+            passwordHash = hashlib.sha1(password).hexdigest()
+            self.result.place(x=30, y=180)
+            self.TextVar.set(passwordHash)
+            self.result_box.place(x=30, y=220)
+
+        else:
+            messagebox.showerror("Error !", "Something Went Wrong !!")
