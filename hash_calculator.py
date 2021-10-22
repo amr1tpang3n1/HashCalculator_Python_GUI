@@ -9,7 +9,7 @@ class HashGenerator:
         Developed by : Amrit Pangeni
         Available at : https://github.com/amr1tpang3n1/HashCalculator_Python_GUI.git
         """
-        
+
         self.root = Tk()
         self.root.geometry("500x300")
         self.root.title("Hash Calculator")
@@ -30,7 +30,7 @@ class HashGenerator:
         self.notebook.add(self.FileScan, text="                         File Hash Calculation                       ")
 
         # GUI FOR STRING HASH CALCULATION
-        
+
         label1 = Label(self.StringScan, text="Hash Type & String for Generating Hash :", bg="#abcdef",
                        font="cambria 14")
         label1.place(x=30, y=15)
@@ -52,7 +52,7 @@ class HashGenerator:
         self.result_box = Entry(self.StringScan, font="cambria 12", width="50", textvariable=self.TextVar)
 
         # GUI FOR FILE HASH CALCULATION
-        
+
         label2 = Label(self.FileScan, text="Hash Type & File for Generating Hash :", bg="#abcdef",
                        font="cambria 14")
         label2.place(x=30, y=15)
@@ -61,7 +61,7 @@ class HashGenerator:
         file_path = Entry(self.FileScan, font="cambria 12", width="50", textvariable=self.path, state="readonly")
         file_path.place(x=30, y=80)
 
-        self.button1 = Button(self.FileScan, text="Browse", font="cambria 11", bg="#bcdefa", fg="white",
+        self.button1 = Button(self.FileScan, text="Browse", font="cambria 11", bg="#aaaaaa",
                               command=self.File_Open_Dialog)
         self.button1.place(x=420, y=45)
 
@@ -73,9 +73,9 @@ class HashGenerator:
                               command=self.hash_generator_file)
         self.button2.place(x=200, y=125)
 
-        self.TextVar = StringVar()
-        self.result = Label(self.StringScan, text="Hash Generated: ", bg="#abcdef", font="cambria 14")
-        self.result_box = Entry(self.StringScan, font="cambria 12", width="50", textvariable=self.TextVar)
+        self.resultVar = StringVar()
+        self.result1 = Label(self.FileScan, text="Hash Generated: ", bg="#abcdef", font="cambria 14")
+        self.result_box1 = Entry(self.FileScan, font="cambria 12", width="50", textvariable=self.resultVar)
 
         self.root.mainloop()
 
@@ -86,44 +86,61 @@ class HashGenerator:
 
     def hash_generator_string(self):
         from tkinter import messagebox
-        hash = self.comboBox.get()
-        hashType = str()
-        if hash == "Md5":
-            hashType = "1"
-        elif hash == "Sha2":
-            hashType = "2"
-        elif hash == "Sha1":
-            hashType = "3"
-
+        hashType = self.comboBox.get()
         string = str(self.userInput.get())
+
         if string == "":
             messagebox.showinfo("Error", "Nothing to do")
-        elif hashType.strip() == "1":
+
+        elif hashType.strip() == "Md5":
             password = string.encode()
             passwordHash = hashlib.md5(password).hexdigest()
             self.result.place(x=30, y=180)
             self.TextVar.set(passwordHash)
             self.result_box.place(x=30, y=220)
 
-        elif hashType.strip() == "2":
+        elif hashType.strip() == "Sha2":
             password = string.encode()
             passwordHash = hashlib.sha256(password).hexdigest()
             self.result.place(x=30, y=180)
             self.TextVar.set(passwordHash)
             self.result_box.place(x=30, y=220)
 
-        elif hashType.strip() == "3":
+        elif hashType.strip() == "Sha1":
             password = string.encode()
             passwordHash = hashlib.sha1(password).hexdigest()
             self.result.place(x=30, y=180)
             self.TextVar.set(passwordHash)
             self.result_box.place(x=30, y=220)
-        else:
-            messagebox.showerror("Error !", "Something Went Wrong !!")
 
     def hash_generator_file(self):
-        print("Hello")
+        from tkinter import messagebox
+        path = self.path.get()
+        hashType = self.comboBox1.get()
 
+        with open(path,'rb') as file:
+            file_contents = file.read()
+
+        if hashType.strip() == "":
+            messagebox.showinfo("Error", "Nothing to do")
+
+        elif hashType.strip() == "Md5":
+            passwordHash = hashlib.md5(file_contents).hexdigest()
+            self.result1.place(x=30, y=180)
+            self.resultVar .set(passwordHash)
+            self.result_box1.place(x=30, y=220)
+
+        elif hashType.strip() == "Sha2":
+            passwordHash = hashlib.sha256(file_contents).hexdigest()
+            self.result1.place(x=30, y=180)
+            self.resultVar.set(passwordHash)
+            self.result_box1.place(x=30, y=220)
+
+        elif hashType.strip() == "Sha1":
+            passwordHash = hashlib.sha1(file_contents).hexdigest()
+            self.result1.place(x=30, y=180)
+            self.resultVar.set(passwordHash)
+            self.result_box1.place(x=30, y=220)
 
 if __name__ == '__main__':
     HashGenerator()
