@@ -39,6 +39,7 @@ class HashCalculator:
         self.result_box = Entry(self.root, font = "cambria 12", width = "50", textvariable = self.TextVar)
         self.root.mainloop()
 
+
     def hash_generator_function(self):
         from tkinter import messagebox
 
@@ -54,7 +55,7 @@ class HashCalculator:
         string = str(self.userInput.get())
         if string == "":
             messagebox.showinfo("Error","Nothing to do")
-            
+
         elif hashType.strip() == "1":
             password = string.encode()
             passwordHash = hashlib.md5(password).hexdigest()
@@ -78,3 +79,6 @@ class HashCalculator:
 
         else:
             messagebox.showerror("Error !", "Something Went Wrong !!")
+
+if __name__ == '__main__':
+    HashCalculator()
