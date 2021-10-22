@@ -17,26 +17,42 @@ class HashCalculator:
         self.root.resizable(0,0)
         self.root.config(background="#abcdef")
 
-        label = Label(self.root,text = "Hash Generator: SHA1, SHA2, MD5", bg = "#ffffff", font = "cambria 18")
-        label.pack(fill = X)
-        label1 = Label(self.root,text = "String to generate hash of : ", bg = "#abcdef", font = "cambria 14")
-        label1.place(x = 30, y = 50)
+        self.notebook = ttk.Notebook(self.root)
+        self.notebook.pack()
+
+        self.StringScan = Frame(self.notebook, width=1000, height=700, bg="#70adda")
+        self.frame2 = Frame(self.notebook, width=1000, height=700, bg="#70adda")
+
+        self.StringScan.pack(fill=BOTH, expand=1)
+        self.frame2.pack(fill=BOTH, expand=1)
+        self.notebook.add(self.StringScan,text="                         String Hash Calculation                       ")
+        self.notebook.add(self.frame2, text="                         File Hash Calculation                       ")
+
+
+        ## GUI FOR STRING HASH CALCULATION
+
+        label1 = Label(self.StringScan,text = "Hash Type & String for Generating Hash :", bg = "#abcdef", font = "cambria 14")
+        label1.place(x = 30, y = 15)
 
         self.userInput = StringVar()
-        entry_box = Entry(self.root, font = "cambria 12", width = "50", textvariable = self.userInput)
-        entry_box.place(x = 30 ,y = 90)
+        entry_box = Entry(self.StringScan, font = "cambria 12", width = "50", textvariable = self.userInput)
+        entry_box.place(x = 30 ,y = 80)
 
-        self.comboBox = ttk.Combobox(self.root,values = ("Sha1","Sha2","Md5"), state = 'readonly')
+        self.comboBox = ttk.Combobox(self.StringScan,values = ("Sha1","Sha2","Md5"), state = 'readonly')
         self.comboBox.set("Md5")
-        self.comboBox.place(x = 270, y = 55)
+        self.comboBox.place(x = 30, y = 50)
 
-        self.button = Button(self.root, text = "Generate", font = "cambria 13", bg = "green", fg = "white",
+        self.button = Button(self.StringScan, text = "Generate", font = "cambria 13", bg = "green", fg = "white",
                              command = self.hash_generator_function)
-        self.button.place(x = 200 , y = 130)
+        self.button.place(x = 200 , y = 125)
 
         self.TextVar = StringVar()
-        self.result = Label(self.root, text="Hash Generated: ", bg="#abcdef", font="cambria 14")
-        self.result_box = Entry(self.root, font = "cambria 12", width = "50", textvariable = self.TextVar)
+        self.result = Label(self.StringScan, text="Hash Generated: ", bg="#abcdef", font="cambria 14")
+        self.result_box = Entry(self.StringScan, font = "cambria 12", width = "50", textvariable = self.TextVar)
+
+
+        ## GUI FOR FILE HASH CALCULATION
+
         self.root.mainloop()
 
 
